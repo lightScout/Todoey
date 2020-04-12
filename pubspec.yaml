@@ -13,6 +13,7 @@ dependencies:
 
   cupertino_icons: ^0.1.2
   provider: ^4.0.4
+  circle_list: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -20,6 +21,8 @@ dev_dependencies:
 
 
 flutter:
+  assets:
+    - assets/images/
 
 
   uses-material-design: true
