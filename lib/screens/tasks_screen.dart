@@ -46,7 +46,7 @@ class TasksScreen extends StatelessWidget {
                     top: 70.0,
                     left: 20.0,
                     right: 30.0,
-                    bottom: 30.0,
+                    bottom: 10.0,
                   ),
                   child: Row(
                     children: <Widget>[
@@ -66,18 +66,45 @@ class TasksScreen extends StatelessWidget {
                             height: 10.0,
                           ),
                           Text(
-                            'Todoey',
+                            'Ciao',
                             style: TextStyle(
+                              fontFamily: 'Pacifico',
                               color: Colors.white,
                               fontSize: 55.5,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          Text(
-                            '${Provider.of<TaskData>(context).taskCount} Tasks',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22.2,
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.green[500],
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10.0),
+                                topRight: Radius.circular(200.0),
+                                bottomLeft: Radius.circular(200.0),
+                                bottomRight: Radius.circular(30.0),
+                              ),
+                            ),
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  '${Provider.of<TaskData>(context).taskCount}',
+                                  style: TextStyle(
+                                    fontSize: 44.4,
+                                    fontFamily: 'Pacifico',
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  ' tasks',
+                                  style: TextStyle(
+                                    fontFamily: 'Playfair',
+                                    color: Colors.white,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 20.2,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -90,9 +117,10 @@ class TasksScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Color(0xFFFFFFFF),
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(20.0),
-                      bottomLeft: Radius.circular(100.0),
+                      topLeft: Radius.circular(30.0),
+                      topRight: Radius.circular(30.0),
+                      bottomLeft: Radius.circular(30.0),
+                      bottomRight: Radius.circular(30.0),
                     ),
                   ),
                   child: TasksLists(),

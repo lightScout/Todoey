@@ -54,7 +54,7 @@ class _TasksListsState extends State<TasksLists>
                 },
               ),
               onDismissed: (direction) {
-                taskData..deleteTask(task);
+                taskData.deleteTask(task);
               },
               confirmDismiss: (DismissDirection direction) async {
                 return await showDialog(
@@ -62,28 +62,30 @@ class _TasksListsState extends State<TasksLists>
                   builder: (BuildContext context) {
                     return Container(
                       child: AlertDialog(
-                        backgroundColor: Colors.white10,
+                        backgroundColor: Colors.lightBlue[100],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(123.4),
                           ),
                         ),
-                        title: const Text(
+                        title: Text(
                           "CONFIRM",
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 22.2,
+                            color: Colors.black,
+                            fontSize: 32.2,
                             fontWeight: FontWeight.w700,
+                            fontFamily: 'Playfair',
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        content: const Text(
+                        content: Text(
                           "Are you sure you wish to delete this task?",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                             fontSize: 22.2,
-                            fontWeight: FontWeight.w200,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Playfair',
                           ),
                         ),
                         actions: <Widget>[
@@ -92,15 +94,19 @@ class _TasksListsState extends State<TasksLists>
                             child: Row(
                               children: <Widget>[
                                 FlatButton(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(123.4),
-                                      ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(123.4),
                                     ),
-                                    color: Colors.white,
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(true),
-                                    child: const Text("DELETE")),
+                                  ),
+                                  color: Colors.redAccent,
+                                  onPressed: () =>
+                                      Navigator.of(context).pop(true),
+                                  child: Text(
+                                    "DELETE",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
                                 SizedBox(width: 20.0),
                                 FlatButton(
                                   shape: RoundedRectangleBorder(
@@ -111,7 +117,7 @@ class _TasksListsState extends State<TasksLists>
                                   color: Colors.white,
                                   onPressed: () =>
                                       Navigator.of(context).pop(false),
-                                  child: const Text("CANCEL"),
+                                  child: Text("CANCEL"),
                                 ),
                               ],
                             ),
@@ -122,18 +128,41 @@ class _TasksListsState extends State<TasksLists>
                   },
                 );
               },
-              background: Container(
-                padding: EdgeInsets.only(left: 10.0),
-                color: Colors.red,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Icon(
-                      Icons.delete,
-                      size: 30.0,
-                      color: Colors.white,
+              background: Center(
+                child: Container(
+                  padding: EdgeInsets.only(
+                    top: 3.0,
+                    bottom: 3.0,
+                  ),
+                  constraints: BoxConstraints(
+                    maxHeight: 300.0,
+                    maxWidth: 380.0,
+//                      minWidth: 100.0,
+//                      minHeight: 150.0
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.redAccent,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(100.0),
+                      topRight: Radius.circular(100.0),
+                      bottomLeft: Radius.circular(40.0),
+                      bottomRight: Radius.circular(40.0),
                     ),
-                  ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      CircleAvatar(
+                        child: Icon(
+                          Icons.delete,
+                          size: 30.0,
+                          color: Colors.redAccent,
+                        ),
+                        radius: 30.0,
+                        backgroundColor: Colors.white,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
