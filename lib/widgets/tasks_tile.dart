@@ -19,12 +19,13 @@ class TaskTile extends StatefulWidget {
   _TaskTileState createState() => _TaskTileState();
 }
 
-class _TaskTileState extends State<TaskTile>
-    with SingleTickerProviderStateMixin {
-  double height = 75.0;
+class _TaskTileState extends State<TaskTile> with TickerProviderStateMixin {
+  double height = 80.0;
   double width = 360.0;
   bool expand = false;
-
+  Color color = Colors.white;
+  Color taskTitleColor = Colors.black;
+  Color taskDueText = Colors.grey[900];
   AnimationController expandController;
   Animation<double> animation;
 
@@ -64,64 +65,150 @@ class _TaskTileState extends State<TaskTile>
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        AnimatedContainer(
-          duration: Duration(milliseconds: 50),
-//          padding: EdgeInsets.only(left: 10.0),
-          height: height,
-          width: width,
+        AnimatedSize(
+          curve: Curves.elasticOut,
+          duration: Duration(milliseconds: 1000),
+          vsync: this,
           child: GestureDetector(
             onTap: () {
               setState(
                 () {
                   expand = !expand;
                   if (expand) {
+                    color = Colors.black;
+                    taskTitleColor = Colors.white;
+                    taskDueText = Colors.grey[200];
                     height = 170.0;
-                    width = 400.0;
+                    width = 370.0;
                   } else {
-                    height = 75.0;
+                    color = Colors.white;
+                    taskTitleColor = Colors.black;
+                    taskDueText = Colors.grey[900];
+                    height = 80.0;
                     width = 360.0;
                   }
                 },
               );
             },
-            child: Card(
-              //color: Colors.grey[100],
-
-              elevation: 2.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(30.0),
-                ),
-              ),
-              child: ListTile(
-                leading: CircularCheckBox(
-                  value: widget.isChecked,
-                  onChanged: widget.checkBoxCallBack,
-                  activeColor: Color(0xFF00008B),
-                  materialTapTargetSize: MaterialTapTargetSize.padded,
-                ),
-                title: Text(
-                  widget.taskTitle,
-                  style: TextStyle(
-                    decoration:
-                        widget.isChecked ? TextDecoration.lineThrough : null,
-                    fontSize: 19.0,
-                    color: widget.isChecked ? Colors.grey[500] : Colors.black,
-                    fontWeight: FontWeight.w500,
+            child: Container(
+              height: height,
+              width: width,
+              child: Card(
+                color: color,
+                elevation: 2.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(30.0),
                   ),
                 ),
-                subtitle: Text(
-                  'By Tomorrow',
-                  style: TextStyle(
-                    color:
-                        widget.isChecked ? Colors.grey[500] : Colors.grey[900],
-                  ),
-                ),
-                //onLongPress: deleteTask,
-                trailing: Icon(
-                  Icons.delete,
-                  color: widget.isChecked ? Colors.redAccent : Colors.grey,
-                  size: widget.isChecked ? 40.0 : 25.0,
+                child: Column(
+                  children: <Widget>[
+                    expand
+                        ? Column(
+                            children: <Widget>[
+                              ListTile(
+                                leading: CircularCheckBox(
+                                  value: widget.isChecked,
+                                  onChanged: widget.checkBoxCallBack,
+                                  activeColor: Color(0xFF00008B),
+                                  inactiveColor:
+                                      expand ? Colors.white : Colors.black,
+                                  materialTapTargetSize:
+                                      MaterialTapTargetSize.padded,
+                                ),
+                                title: Text(
+                                  widget.taskTitle,
+                                  style: TextStyle(
+                                    decoration: widget.isChecked
+                                        ? TextDecoration.lineThrough
+                                        : null,
+                                    fontSize: 19.0,
+                                    color: widget.isChecked
+                                        ? Colors.grey[500]
+                                        : taskTitleColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  'By Tomorrow',
+                                  style: TextStyle(
+                                    color: widget.isChecked
+                                        ? Colors.grey[500]
+                                        : taskDueText,
+                                  ),
+                                ),
+                                //onLongPress: deleteTask,
+                                trailing: Icon(
+                                  Icons.delete,
+                                  color: widget.isChecked
+                                      ? Colors.redAccent
+                                      : Colors.grey,
+                                  size: widget.isChecked ? 40.0 : 25.0,
+                                ),
+                              ),
+                              Container(
+                                constraints: BoxConstraints(
+                                  maxWidth: 300.0,
+                                  minHeight: 40.0,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20.0),
+                                    topRight: Radius.circular(0.0),
+                                    bottomLeft: Radius.circular(20.0),
+                                    bottomRight: Radius.circular(20.0),
+                                  ),
+                                ),
+                                padding: EdgeInsets.all(10.0),
+                                child: Text(
+                                  'Text TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ],
+                          )
+                        : ListTile(
+                            leading: CircularCheckBox(
+                              value: widget.isChecked,
+                              onChanged: widget.checkBoxCallBack,
+                              activeColor: Color(0xFF00008B),
+                              inactiveColor:
+                                  expand ? Colors.white : Colors.black,
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.padded,
+                            ),
+                            title: Text(
+                              widget.taskTitle,
+                              style: TextStyle(
+                                decoration: widget.isChecked
+                                    ? TextDecoration.lineThrough
+                                    : null,
+                                fontSize: 19.0,
+                                color: widget.isChecked
+                                    ? Colors.grey[500]
+                                    : taskTitleColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            subtitle: Text(
+                              'By Tomorrow',
+                              style: TextStyle(
+                                color: widget.isChecked
+                                    ? Colors.grey[500]
+                                    : taskDueText,
+                              ),
+                            ),
+                            //onLongPress: deleteTask,
+                            trailing: Icon(
+                              Icons.delete,
+                              color: widget.isChecked
+                                  ? Colors.redAccent
+                                  : Colors.grey,
+                              size: widget.isChecked ? 40.0 : 25.0,
+                            ),
+                          ),
+                  ],
                 ),
               ),
             ),

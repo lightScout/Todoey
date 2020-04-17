@@ -49,9 +49,9 @@ class _TasksListsState extends State<TasksLists>
                   taskData.updateTask(task);
                   controller.forward();
                 },
-                deleteTask: () {
-                  taskData.deleteTask(task);
-                },
+//                deleteTask: () {
+//                  taskData.deleteTask(task);
+//                },
               ),
               onDismissed: (direction) {
                 taskData.deleteTask(task);

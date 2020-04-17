@@ -6,7 +6,52 @@ import 'package:provider/provider.dart';
 import 'package:circle_list/circle_list.dart';
 import 'package:todoey_flutter/widgets/curve_painter.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
+  @override
+  _TasksScreenState createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen>
+    with TickerProviderStateMixin {
+  AnimationController controller;
+  Animation<double> widthScaleAnimation;
+  Animation<double> heightScaleAnimation;
+  bool isExpanded = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    ///Setting up the animation
+
+    controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 800),
+      reverseDuration: Duration(milliseconds: 500),
+    );
+
+    widthScaleAnimation = Tween(begin: 40.0, end: 350.0).animate(
+        CurvedAnimation(
+            parent: controller,
+            curve: isExpanded ? Curves.linear : Curves.elasticInOut));
+    heightScaleAnimation = Tween(begin: 80.0, end: 200.0).animate(
+        CurvedAnimation(
+            parent: controller,
+            curve: isExpanded ? Curves.linear : Curves.elasticInOut));
+
+    controller.addListener(() {
+      setState(() {});
+    });
+
+    //controller.addStatusListener(listener)
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -128,14 +173,31 @@ class TasksScreen extends StatelessWidget {
                 SizedBox(
                   height: 3.0,
                 ),
-                Container(
-                  height: 180,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFFFC100),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(111.1),
-                      //topRight: Radius.circular(20.0),
-                      bottomLeft: Radius.circular(111.1),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isExpanded = !isExpanded;
+                      if (isExpanded) {
+                        controller.forward();
+                      } else {
+                        controller.reverse();
+                      }
+                    });
+                    //controller.reset();
+                  },
+                  child: Transform.scale(
+                    scale: 1.0,
+                    child: Container(
+                      height: heightScaleAnimation.value,
+                      width: widthScaleAnimation.value,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFFC100),
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(111.1),
+                          //topRight: Radius.circular(20.0),
+                          bottomRight: Radius.circular(111.1),
+                        ),
+                      ),
                     ),
                   ),
                 ),
